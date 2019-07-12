@@ -1,0 +1,386 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: REST API Group Project
+  description: Provides a simple database-backed REST web service for rental store.
+servers: 
+  - url: http://localhost:8080/rentalstore
+    description: Local dev server
+paths:
+  /customer:
+    post:
+      summary: Create a new customer
+      description: Add new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+                
+        '400':
+          description: Bad Request
+          
+  /customer/{id}:
+    get:
+      summary: Get customer by id
+      description: Queries Database for customer by id
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: Customer id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+    put:
+      summary: Update customer by id
+      description: Updates customer by id in path with properties in request body
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Customer id
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Delete customer by id
+      description: Deletes customer by id in path
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Customer id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /customers:
+    get:
+      summary: Get all customers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+                
+  /item:
+    post:
+      summary: Create a new item
+      description: Add new item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemResponse'
+                
+        '400':
+          description: Bad Request
+          
+  /item/{id}:
+    get:
+      summary: Get item by id
+      description: Queries Database for item by id
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: Item id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemResponse'
+    put:
+      summary: Update item by id
+      description: Updates item by id in path with properties in request body
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Item id
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemRequest'
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Delete item by id
+      description: Deletes item by id in path
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Item id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /items:
+    get:
+      summary: Get all items
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemResponse'
+  
+  /invoice:
+    post:
+      summary: Create a new invoice
+      description: Add new invoice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceResponse'
+                
+        '400':
+          description: Bad Request
+          
+  /invoices/{customer_id}:
+    get:
+      summary: Get invoice list by customer id
+      description: return list of invoices by customer id
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          description: Customer id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceResponse'
+          
+  /invoice/{id}:
+    delete:
+      summary: Delete invoice by id
+      description: Deletes invoice by id in path
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Invoice id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /invoice_item:
+    post:
+      summary: Create a new invoice item
+      description: Add new invoice item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice_itemRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice_itemResponse'
+                
+        '400':
+          description: Bad Request
+          
+  /invoice_item/{id}:
+    delete:
+      summary: Delete invoice item by id
+      description: Deletes invoice item by id in path
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Invoice item id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    CustomerRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        company:
+          type: string
+        phone:
+          type: string
+      required: 
+        - first_name
+        - last_name
+        - email
+        - company
+        - phone
+          
+    CustomerResponse:
+      type: object
+      properties:
+        customer_id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        company:
+          type: string
+        phone:
+          type: string
+    
+    ItemRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        daily_rate:
+          type: number
+      required: 
+        - name
+        - description
+        - daily_rate
+          
+    ItemResponse:
+      type: object
+      properties:
+        item_id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        daily_rate:
+          type: number
+    InvoiceRequest:
+      type: object
+      properties:
+        order_date:
+          type: string
+        pickup_date:
+          type: string
+        return_date:
+          type: string
+        late_fee:
+          type: number
+      required: 
+        - order_date
+        - pickup_date
+        - return_date
+        - late_fee
+          
+    InvoiceResponse:
+      type: object
+      properties:
+        invoice_id:
+          type: integer
+        customer_id:
+          type: integer
+        order_date:
+          type: string
+        pickup_date:
+          type: string
+        return_date:
+          type: string
+        late_fee:
+          type: number
+          
+    Invoice_itemRequest:
+      type: object
+      properties:
+        quantity:
+          type: integer
+        unit_rate:
+          type: number
+        discount:
+          type: number
+      required: 
+        - quantity
+        - unit_rate
+        - discount
+          
+    Invoice_itemResponse:
+      type: object
+      properties:
+        invoice_item_id:
+          type: integer
+        invoice_id:
+          type: integer
+        item_id:
+          type: integer
+        quantity:
+          type: integer
+        unit_rate:
+          type: number
+        discount:
+          type: number
