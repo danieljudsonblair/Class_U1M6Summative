@@ -1,13 +1,20 @@
 package com.example.ClassU1M6Summative.model;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class Customer {
+    @NotEmpty
     private int customer_id;
+    @NotEmpty
     private String first_name;
+    @NotEmpty
     private String last_name;
+    @NotEmpty
     private String email;
+    @NotEmpty
     private String company;
+    @NotEmpty
     private String phone;
 
     public int getCustomer_id() {
