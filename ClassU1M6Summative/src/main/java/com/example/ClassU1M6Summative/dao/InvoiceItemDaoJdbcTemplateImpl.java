@@ -55,9 +55,9 @@ public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
     }
 
     // Helper method to map result set (not needed but keeping for future use)
-    private InvoiceItem mapRowToAuthor(ResultSet rs, int rowNum) throws SQLException {
+    private InvoiceItem mapRowToInvoiceItem(ResultSet rs, int rowNum) throws SQLException {
         InvoiceItem invoiceItem = new InvoiceItem();
-        invoiceItem.setInvoice_id(rs.getInt("invoice_item_id"));
+        invoiceItem.setInvoice_item_id(rs.getInt("invoice_item_id"));
         invoiceItem.setInvoice_id(rs.getInt("invoice_id"));
         invoiceItem.setItem_id(rs.getInt("item_id"));
         invoiceItem.setQuantity(rs.getInt("quantity"));
