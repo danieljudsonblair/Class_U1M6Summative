@@ -2,6 +2,8 @@ package com.example.ClassU1M6Summative.dao;
 
 import com.example.ClassU1M6Summative.model.InvoiceItem;
 
+import java.util.List;
+
 public interface InvoiceItemDao {
 
     /**
@@ -27,4 +29,8 @@ public interface InvoiceItemDao {
      * @param invoice_id type int
      */
     void deleteInvoiceItemByInvoiceId(int invoice_id);
+
+    void deleteInvoiceItem(int invoice_item_id);
+
+    List<InvoiceItem> getAllInvoiceItems();
 }

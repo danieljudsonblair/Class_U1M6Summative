@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Repository
 public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
@@ -25,6 +26,12 @@ public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
 
     private static final String DELETE_INVOICE_ITEM_BY_ITEM_ID_SQL =
             "delete from INVOICE_ITEM where item_id=?";
+
+    private static final String DELETE_INVOICE_ITEM_SQL =
+            "delete from invoice_item where invoice_item_id = ?";
+
+    private static final String SELECT_ALL_INVOICE_ITEMS_SQL =
+            "select * from invoice_item";
 
 
     // Constructor injection
@@ -45,6 +52,11 @@ public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
     }
 
     @Override
+    public List<InvoiceItem> getAllInvoiceItems() {
+        return jdbcTemplate.query(SELECT_ALL_INVOICE_ITEMS_SQL, this::mapRowToInvoiceItem);
+    }
+
+    @Override
     public void deleteInvoiceItemByItemId(int item_id) {
         jdbcTemplate.update(DELETE_INVOICE_ITEM_BY_ITEM_ID_SQL, item_id);
     }
@@ -54,7 +66,12 @@ public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
         jdbcTemplate.update(DELETE_INVOICE_ITEM_BY_INVOICE_ID_SQL, invoice_id);
     }
 
-    // Helper method to map result set (not needed but keeping for future use)
+    @Override
+    public void deleteInvoiceItem(int invoice_item_id) {
+        jdbcTemplate.update(DELETE_INVOICE_ITEM_SQL, invoice_item_id);
+    }
+
+    // Helper method to map result set
     private InvoiceItem mapRowToInvoiceItem(ResultSet rs, int rowNum) throws SQLException {
         InvoiceItem invoiceItem = new InvoiceItem();
         invoiceItem.setInvoice_item_id(rs.getInt("invoice_item_id"));
