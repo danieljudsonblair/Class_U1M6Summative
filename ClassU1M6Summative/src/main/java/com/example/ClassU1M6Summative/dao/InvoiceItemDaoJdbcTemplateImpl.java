@@ -49,15 +49,16 @@ public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
         jdbcTemplate.update(DELETE_INVOICE_ITEM_BY_ITEM_ID_SQL, item_id);
     }
 
+
     @Override
     public void deleteInvoiceItemByInvoiceId(int invoice_id) {
         jdbcTemplate.update(DELETE_INVOICE_ITEM_BY_INVOICE_ID_SQL, invoice_id);
     }
 
     // Helper method to map result set (not needed but keeping for future use)
-    private InvoiceItem mapRowToAuthor(ResultSet rs, int rowNum) throws SQLException {
+    private InvoiceItem mapRowToInvoiceItem(ResultSet rs, int rowNum) throws SQLException {
         InvoiceItem invoiceItem = new InvoiceItem();
-        invoiceItem.setInvoice_id(rs.getInt("invoice_item_id"));
+        invoiceItem.setInvoice_item_id(rs.getInt("invoice_item_id"));
         invoiceItem.setInvoice_id(rs.getInt("invoice_id"));
         invoiceItem.setItem_id(rs.getInt("item_id"));
         invoiceItem.setQuantity(rs.getInt("quantity"));

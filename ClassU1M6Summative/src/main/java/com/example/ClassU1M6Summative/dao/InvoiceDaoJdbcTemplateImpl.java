@@ -25,6 +25,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao{
     public static final String SELECT_ALL_INVOICES_SQL =
             "select * from invoice";
 
+
     public static final String UPDATE_INVOICE_SQL =
             "update customer set customer_id = ?, order_date = ?, pickup_date = ?, return_date = ?, late_fee = ? where invoice_id = ?";
 
@@ -77,9 +78,9 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao{
         Invoice invoice = new Invoice();
         invoice.setInvoiceID(rs.getInt("invoice_id"));
         invoice.setCustomerID(rs.getInt("customer_id"));
-        invoice.setOrderDate(rs.getString("order_date"));
-        invoice.setPickupDate(rs.getString("pickup_date"));
-        invoice.setReturnDate(rs.getString("return_date"));
+        invoice.setOrderDate(rs.getDate("order_date").toLocalDate());
+        invoice.setPickupDate(rs.getDate("pickup_date").toLocalDate());
+        invoice.setReturnDate(rs.getDate("return_date").toLocalDate());
         invoice.setLateFee(rs.getBigDecimal("late_fee"));
 
         return invoice;
