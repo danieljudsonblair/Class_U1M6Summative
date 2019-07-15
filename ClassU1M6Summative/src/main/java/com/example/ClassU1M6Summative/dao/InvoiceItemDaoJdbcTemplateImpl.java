@@ -1,11 +1,15 @@
 package com.example.ClassU1M6Summative.dao;
 
 import com.example.ClassU1M6Summative.model.InvoiceItem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Repository
 public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
 
     // Init jdbc
@@ -24,12 +28,14 @@ public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
 
 
     // Constructor injection
+    @Autowired
     public InvoiceItemDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     // Interface implementation
     @Override
+    @Transactional
     public InvoiceItem addInvoiceItem(InvoiceItem invoiceItem) {
         jdbcTemplate.update(INSERT_INVOICE_ITEM_SQL, invoiceItem.getInvoice_id(), invoiceItem.getItem_id(),
                 invoiceItem.getQuantity(), invoiceItem.getUnit_rate(), invoiceItem.getDiscount());
