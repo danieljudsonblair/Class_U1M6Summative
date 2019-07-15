@@ -18,27 +18,27 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class CustomerDaoTest {
+public class ItemDaoTest {
 
-    @Autowired
-    CustomerDao customerDao;
     @Autowired
     ItemDao itemDao;
     @Autowired
     InvoiceItemDao invoiceItemDao;
     @Autowired
     InvoiceDao invoiceDao;
+    @Autowired
+    CustomerDao customerDao;
 
     @Before
     public void setUp() throws Exception {
-        invoiceItemDao.getAllInvoiceItems().stream().forEach(ii -> invoiceItemDao.deleteInvoiceItem(ii.getInvoice_item_id()));
-        invoiceDao.getAllInvoices().stream().forEach(i -> invoiceDao.deleteInvoice(i.getInvoiceID()));
-        itemDao.getAllItems().stream().forEach(i -> itemDao.deleteItem(i.getItem_id()));
-        customerDao.getAllCustomers().stream().forEach(c -> customerDao.deleteCustomer(c.getCustomer_id()));
+       invoiceItemDao.getAllInvoiceItems().stream().forEach(ii -> invoiceItemDao.deleteInvoiceItem(ii.getInvoice_item_id()));
+       invoiceDao.getAllInvoices().stream().forEach(i -> invoiceDao.deleteInvoice(i.getInvoiceID()));
+       itemDao.getAllItems().stream().forEach(i -> itemDao.deleteItem(i.getItem_id()));
+       customerDao.getAllCustomers().stream().forEach(c -> customerDao.deleteCustomer(c.getCustomer_id()));
     }
 
     @Test
-    public void addGetDeleteCustomer() {
+    public void addGetDeleteItem() {
 
         Customer customer = new Customer();
         customer.setFirst_name("First");
@@ -81,62 +81,50 @@ public class CustomerDaoTest {
 
         itemDao.addItem(item1);
 
-        customerDao.addCustomer(customer);
-
-        assertEquals(customerDao.getCustomer(customer.getCustomer_id()), customer);
+        assertEquals(itemDao.getItem(item.getItem_id()), item);
 
         invoiceItemDao.deleteInvoiceItem(invoiceItem.getInvoice_item_id());
-        invoiceDao.deleteInvoice(invoice.getInvoiceID());
-        customerDao.deleteCustomer(customer.getCustomer_id());
 
-        assertNull(customerDao.getCustomer(customer.getCustomer_id()));
+        itemDao.deleteItem(item.getItem_id());
+
+        assertNull(itemDao.getItem(item.getItem_id()));
     }
 
     @Test
-    public void updateCustomer() {
+    public void updateItem() {
 
-        Customer customer = new Customer();
-        customer.setFirst_name("First");
-        customer.setLast_name("Last");
-        customer.setEmail("customer@customer.com");
-        customer.setCompany("company");
-        customer.setPhone("555-555-5555");
+        Item item = new Item();
+        item.setName("Name");
+        item.setDescription("Description");
+        item.setDaily_rate(new BigDecimal("1.00"));
 
-        customerDao.addCustomer(customer);
+        itemDao.addItem(item);
 
-        customer.setFirst_name("Updated First");
-        customer.setLast_name("Updated Last");
-        customer.setEmail("updatedCustomer@customer.com");
-        customer.setCompany("updated company");
-        customer.setPhone("111-111-1111");
+        item.setName("Updated Name");
+        item.setDescription("Updated Description");
+        item.setDaily_rate(new BigDecimal("2.00"));
 
-        customerDao.updateCustomer(customer);
+        itemDao.updateItem(item);
 
-        assertEquals(customerDao.getCustomer(customer.getCustomer_id()), customer);
+        assertEquals(itemDao.getItem(item.getItem_id()), item);
     }
 
     @Test
-    public void getAllCustomers() {
+    public void getAllItems() {
 
-        Customer customer = new Customer();
-        customer.setFirst_name("First");
-        customer.setLast_name("Last");
-        customer.setEmail("customer@customer.com");
-        customer.setCompany("company");
-        customer.setPhone("555-555-5555");
+        Item item = new Item();
+        item.setName("Name");
+        item.setDescription("Description");
+        item.setDaily_rate(new BigDecimal("1.00"));
 
-        customerDao.addCustomer(customer);
+        itemDao.addItem(item);
 
-        customer.setFirst_name("New First");
-        customer.setLast_name("New Last");
-        customer.setEmail("newCustomer@customer.com");
-        customer.setCompany("new company");
-        customer.setPhone("222-222-2222");
+        item.setName("New Name");
+        item.setDescription("New Description");
+        item.setDaily_rate(new BigDecimal("1.99"));
 
-        customerDao.addCustomer(customer);
+        itemDao.addItem(item);
 
-        assertEquals(customerDao.getAllCustomers().size(), 2);
+        assertEquals(itemDao.getAllItems().size(), 2);
     }
 }
-
-
