@@ -4,6 +4,7 @@ import javax.validation.constraints.NegativeOrZero;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Invoice {
     @NotEmpty
@@ -66,5 +67,23 @@ public class Invoice {
 
     public void setLateFee(BigDecimal lateFee) {
         this.lateFee = lateFee;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Invoice invoice = (Invoice) o;
+        return getInvoiceID() == invoice.getInvoiceID() &&
+                getCustomerID() == invoice.getCustomerID() &&
+                getOrderDate().equals(invoice.getOrderDate()) &&
+                getPickupDate().equals(invoice.getPickupDate()) &&
+                getReturnDate().equals(invoice.getReturnDate()) &&
+                getLateFee().equals(invoice.getLateFee());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getInvoiceID(), getCustomerID(), getOrderDate(), getPickupDate(), getReturnDate(), getLateFee());
     }
 }

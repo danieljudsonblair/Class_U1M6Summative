@@ -17,7 +17,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao{
     private JdbcTemplate jdbcTemplate;
 
     public static final String INSERT_INVOICE_SQL =
-            "insert into invoice(customer_id, order_date, pickup_date, return_date, late_fee) values (?,?,?,?,?)";
+            "insert into invoice (customer_id, order_date, pickup_date, return_date, late_fee) values (?,?,?,?,?)";
 
     public static final String SELECT_INVOICE_SQL =
             "select * from invoice where invoice_id = ?";
@@ -26,7 +26,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao{
             "select * from invoice";
 
     public static final String UPDATE_INVOICE_SQL =
-            "update invoice set invoice_id = ?, order_date = ?, pickup_date = ?, return_date = ?, late_fee = ? where invoice_id = ?";
+            "update invoice set customer_id = ?, order_date = ?, pickup_date = ?, return_date = ?, late_fee = ? where invoice_id = ?";
 
     public static final String DELETE_INVOICE_SQL =
             "delete from invoice where invoice_id = ?";
