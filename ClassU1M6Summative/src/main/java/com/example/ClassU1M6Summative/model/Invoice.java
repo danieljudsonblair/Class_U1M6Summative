@@ -3,6 +3,7 @@ package com.example.ClassU1M6Summative.model;
 import javax.validation.constraints.NegativeOrZero;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class Invoice {
     @NotEmpty
@@ -10,11 +11,11 @@ public class Invoice {
     @NotEmpty
     private int customerID;
     @NotEmpty
-    private String orderDate;
+    private LocalDate orderDate;
     @NotEmpty
-    private String pickupDate;
+    private LocalDate pickupDate;
     @NotEmpty
-    private String returnDate;
+    private LocalDate returnDate;
     @NotEmpty
     private BigDecimal lateFee;
 
@@ -34,27 +35,27 @@ public class Invoice {
         this.customerID = customerID;
     }
 
-    public String getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
-    public String getPickupDate() {
+    public LocalDate getPickupDate() {
         return pickupDate;
     }
 
-    public void setPickupDate(String pickupDate) {
+    public void setPickupDate(LocalDate pickupDate) {
         this.pickupDate = pickupDate;
     }
 
-    public String getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(String returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 
