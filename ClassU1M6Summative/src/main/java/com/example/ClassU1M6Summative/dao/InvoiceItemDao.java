@@ -34,4 +34,6 @@ public interface InvoiceItemDao {
 
     List<InvoiceItem> getAllInvoiceItems();
 
+    List<InvoiceItem> getAllInvoiceItemsByInvoiceId(int invoice_id);
+
 }

@@ -11,6 +11,8 @@ public interface InvoiceDao {
 
     List<Invoice> getAllInvoices();
 
+    List<Invoice> getAllInvoicesByCustomerId(int customer_id);
+
     List<Integer> getAllInvoiceIdsByCustomerId(int customer_id);
 
     void updateInvoice(Invoice invoice);

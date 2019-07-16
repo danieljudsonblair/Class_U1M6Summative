@@ -75,6 +75,15 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao{
     }
 
     @Override
+    public List<Invoice> getAllInvoicesByCustomerId(int customer_id) {
+        try {
+            return jdbcTemplate.query(SELECT_ALL_INVOICES_BY_CUSTOMER_ID_SQL, this::mapRowToInvoice, customer_id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
     public void updateInvoice(Invoice invoice) {
         jdbcTemplate.update(UPDATE_INVOICE_SQL, invoice.getCustomerID(), invoice.getOrderDate(),
                 invoice.getPickupDate(), invoice.getReturnDate(), invoice.getLateFee(), invoice.getInvoiceID());
