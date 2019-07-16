@@ -31,7 +31,7 @@ build/
 .vscode/
 
 ### Pom ###
-pom.xml
+/pom.xml
 
 ### application properties ###
 /src/main/resources/

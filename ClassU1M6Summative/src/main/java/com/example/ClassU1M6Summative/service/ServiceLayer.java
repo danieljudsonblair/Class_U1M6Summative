@@ -7,6 +7,7 @@ import com.example.ClassU1M6Summative.dao.ItemDao;
 import com.example.ClassU1M6Summative.model.Customer;
 import com.example.ClassU1M6Summative.model.Invoice;
 import com.example.ClassU1M6Summative.model.InvoiceItem;
+import com.example.ClassU1M6Summative.model.Item;
 import com.example.ClassU1M6Summative.viewmodel.CustomerViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -74,11 +75,18 @@ public class ServiceLayer {
 
     // Helper Method
     private CustomerViewModel buildCustomerViewModel(Customer customer){
-//        List<Invoice> custInvList = invoiceDao.getAllInvoicesByCustomerId(customer.getCustomer_id());
-//
-//        custInvList
-//                                    .stream()
-//                                       .forEach(inv -> invoiceItemDao.getAllInvoiceItemsByInvoiceId(inv.getInvoiceID()));
+        List<Invoice> custInvList = invoiceDao.getAllInvoicesByCustomerId(customer.getCustomer_id());
+
+        List<List<InvoiceItem>> IiList = new ArrayList<>();
+        for (Invoice inv : custInvList) {
+            IiList.add(invoiceItemDao.getAllInvoiceItemsByInvoiceId(inv.getInvoiceID()));
+        }
+        List<Item> itemList = new ArrayList<>();
+        for (List<InvoiceItem> iiL : IiList) {
+            for(InvoiceItem ii : iiL) {
+              itemList.add(itemDao.getItem(ii.getItem_id()));
+            }
+        }
 
 
 
