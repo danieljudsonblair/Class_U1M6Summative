@@ -33,4 +33,5 @@ public interface InvoiceItemDao {
     void deleteInvoiceItem(int invoice_item_id);
 
     List<InvoiceItem> getAllInvoiceItems();
+
 }

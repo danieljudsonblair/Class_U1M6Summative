@@ -1,6 +1,9 @@
 package com.example.ClassU1M6Summative.controller;
 
 import com.example.ClassU1M6Summative.dao.CustomerDao;
+import com.example.ClassU1M6Summative.dao.InvoiceDao;
+import com.example.ClassU1M6Summative.dao.InvoiceItemDao;
+import com.example.ClassU1M6Summative.dao.ItemDao;
 import com.example.ClassU1M6Summative.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,10 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     CustomerDao customerDao;
+    @Autowired
+    InvoiceItemDao invoiceItemDao;
+    @Autowired
+    InvoiceDao invoiceDao;
 
     @RequestMapping(value = "/customer/{id}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
@@ -66,6 +73,13 @@ public class CustomerController {
     @RequestMapping(value="/customer/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void deleteCustomer(@PathVariable(name = "id") int id) {
+        // make a list of invoices id's with deleted customer id
+        List<Integer> invIdList = invoiceDao.getAllInvoiceIdsByCustomerId(id);
+        // delete all invoice items with ids from invIdList
+        invIdList.stream().forEach(invId -> invoiceItemDao.deleteInvoiceItemByInvoiceId(invId));
+        // delete all invoices with ids from invIdList
+        invoiceDao.getAllInvoiceIdsByCustomerId(id).stream().forEach(invId -> invoiceDao.deleteInvoice(invId));
+        // delete the customer
         customerDao.deleteCustomer(id);
     }
 }
