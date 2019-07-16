@@ -38,15 +38,29 @@ public class ServiceLayerTest {
     public void saveCustomer(){
         CustomerViewModel cvm = new CustomerViewModel();
         Customer customer = new Customer();
-        cvm.setCustomer(customer);
         customer.setFirst_name("Sara");
         customer.setLast_name("Cole");
         customer.setPhone("919.441.3172");
         customer.setCompany("Verizon");
         customer.setEmail("sara@verizon.com");
-        customer = service.saveCustomer(customer);
         cvm.setCustomer(customer);
-        
+
+        List<Item> itemList = new ArrayList<>();
+        Item item = new Item();
+        item.setItem_id(11);
+        item.setName("name");
+        item.setDescription("description");
+        item.setDaily_rate(new BigDecimal("50"));
+
+        itemList.add(item);
+        cvm.setItems(itemList);
+
+
+
+
+
+        cvm = service.saveCustomer(cvm);
+
     }
 
     // Helper Methods

@@ -10,10 +10,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class CustomerViewModel {
+    private int id;
     private Customer customer;
     private List<Invoice> invoices = new ArrayList<>();
-    private List<InvoiceItem> invoiceItems = new ArrayList<>();
+    private List<List<InvoiceItem>> invoiceItems = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Customer getCustomer() {
         return customer;
@@ -31,11 +40,11 @@ public class CustomerViewModel {
         this.invoices = invoices;
     }
 
-    public List<InvoiceItem> getInvoiceItems() {
+    public List<List<InvoiceItem>> getInvoiceItems() {
         return invoiceItems;
     }
 
-    public void setInvoiceItems(List<InvoiceItem> invoiceItems) {
+    public void setInvoiceItems(List<List<InvoiceItem>> invoiceItems) {
         this.invoiceItems = invoiceItems;
     }
 
@@ -52,7 +61,8 @@ public class CustomerViewModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CustomerViewModel that = (CustomerViewModel) o;
-        return getCustomer().equals(that.getCustomer()) &&
+        return getId() == that.getId() &&
+                getCustomer().equals(that.getCustomer()) &&
                 getInvoices().equals(that.getInvoices()) &&
                 getInvoiceItems().equals(that.getInvoiceItems()) &&
                 getItems().equals(that.getItems());
@@ -60,6 +70,6 @@ public class CustomerViewModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getCustomer(), getInvoices(), getInvoiceItems(), getItems());
+        return Objects.hash(getId(), getCustomer(), getInvoices(), getInvoiceItems(), getItems());
     }
 }
