@@ -30,6 +30,9 @@ build/
 ### VS Code ###
 .vscode/
 
+### Pom ###
+pom.xml
+
 ### application properties ###
 /src/main/resources/
 /src/test/resources/

@@ -33,6 +33,9 @@ public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
     private static final String SELECT_ALL_INVOICE_ITEMS_SQL =
             "select * from invoice_item";
 
+    private static final String SELECT_ALL_INVOICE_ITEMS_BY_INVOICE_ID_SQL =
+            "select * from invoice_item where invoice_id = ?";
+
 
     // Constructor injection
     @Autowired
@@ -55,6 +58,13 @@ public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
     public List<InvoiceItem> getAllInvoiceItems() {
         return jdbcTemplate.query(SELECT_ALL_INVOICE_ITEMS_SQL, this::mapRowToInvoiceItem);
     }
+
+    @Override
+    public List<InvoiceItem> getAllInvoiceItemsByInvoiceId (int invoice_id) {
+        return jdbcTemplate.query(SELECT_ALL_INVOICE_ITEMS_BY_INVOICE_ID_SQL, this::mapRowToInvoiceItem, invoice_id);
+    }
+
+
 
     @Override
     public void deleteInvoiceItemByItemId(int item_id) {
