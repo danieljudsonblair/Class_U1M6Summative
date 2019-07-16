@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import sun.invoke.empty.Empty;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +32,9 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao{
     public static final String DELETE_INVOICE_SQL =
             "delete from invoice where invoice_id = ?";
 
+    public static final String SELECT_ALL_INVOICES_BY_CUSTOMER_ID_SQL =
+            "select * from invoice where customer_id = ?";
+
     @Autowired
     public InvoiceDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -51,6 +55,15 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao{
     public Invoice getInvoice(int invoiceID) {
         try {
             return jdbcTemplate.queryForObject(SELECT_INVOICE_SQL, this::mapRowToInvoice, invoiceID);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Integer> getAllInvoiceIdsByCustomerId(int customer_id) {
+        try {
+            return jdbcTemplate.query(SELECT_ALL_INVOICES_BY_CUSTOMER_ID_SQL, this::mapInvoiceIdToInteger, customer_id);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -83,5 +96,9 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao{
         invoice.setLateFee(rs.getBigDecimal("late_fee"));
 
         return invoice;
+    }
+
+    private Integer mapInvoiceIdToInteger(ResultSet rs, int rowNum) throws SQLException {
+        return rs.getInt("invoice_id");
     }
 }
